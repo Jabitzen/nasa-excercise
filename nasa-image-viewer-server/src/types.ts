@@ -1,3 +1,8 @@
 export interface FetchDatesRequest {
-    dates: string[];
-  }
+  dates: string[];
+}
+
+export interface fetchImageRequest {
+  url: string;
+  date: string;
+}
