@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const nasaClient_1 = require("../nasaClient");
 const utils_1 = require("../utils");
+<<<<<<< HEAD
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const router = express_1.default.Router();
@@ -72,21 +73,38 @@ router.post("/download", (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 router.get("/fetch", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+=======
+const path_1 = __importDefault(require("path"));
+const router = express_1.default.Router();
+router.post('/fetch', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //   const { dates } = req.body;
+    //   if (!Array.isArray(dates)) {
+    //     return res.status(400).json({ error: 'Invalid input, dates must be an array.' });
+    //   }
+>>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
     const datesFilePath = path_1.default.resolve(__dirname, "../../data/dates.txt");
     const dates = (0, utils_1.readDatesFromFile)(datesFilePath);
     if (!dates.length) {
         console.log("no dates found");
     }
     const downloadedImages = [];
+<<<<<<< HEAD
     const photosOutput = {};
     try {
         for (const date of dates) {
             const formattedDate = (0, utils_1.strictParseDate)(date, "yyyy-MM-dd");
+=======
+    try {
+        for (const date of dates) {
+            const formattedDate = (0, utils_1.strictParseDate)(date, "yyyy-MM-dd");
+            console.log("DATE", formattedDate);
+>>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
             if (!formattedDate) {
                 continue;
             }
             const photos = yield (0, nasaClient_1.fetchMarsPhotos)(formattedDate);
             console.log(`Saving images for ${formattedDate}`);
+<<<<<<< HEAD
             const photoList = [];
             for (const photo of photos) {
                 photoList.push(photo);
@@ -96,11 +114,21 @@ router.get("/fetch", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(200).json({
             dates: photosOutput,
         });
+=======
+            for (const photo of photos) {
+                const filename = path_1.default.basename(photo);
+                yield (0, nasaClient_1.downloadImage)(photo, filename, formattedDate);
+                downloadedImages.push(filename);
+            }
+        }
+        res.status(200).json({ message: 'Images downloaded successfully.', files: downloadedImages });
+>>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
     }
     catch (error) {
         res.status(500).json({ error: error.message });
     }
 }));
+<<<<<<< HEAD
 router.get("/list", (req, res) => {
     try {
         const folders = {};
@@ -120,4 +148,15 @@ router.get("/list", (req, res) => {
         res.status(500).json({ error: "Failed to retrieve images" });
     }
 });
+=======
+// router.get('/list', (req, res) => {
+//   const imageDir = path.resolve(__dirname, '../images');
+//   fs.readdir(imageDir, (err, files) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Could not list images.' });
+//     }
+//     res.status(200).json({ images: files });
+//   });
+// });
+>>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
 exports.default = router;
