@@ -9,14 +9,10 @@ const fs_1 = __importDefault(require("fs"));
 const readDatesFromFile = (filePath) => {
     const data = fs_1.default.readFileSync(filePath, "utf-8");
     // trim removes whitespace from beginning and end of date, and boolean takes out "false" values since valid date strings are truthy
-<<<<<<< HEAD
     return data
         .split("\n")
         .map((line) => line.trim())
         .filter(Boolean);
-=======
-    return data.split("\n").map((line) => line.trim()).filter(Boolean);
->>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
 };
 exports.readDatesFromFile = readDatesFromFile;
 const formatDateString = (dateString) => {
@@ -29,7 +25,6 @@ const formatDateString = (dateString) => {
     const year = parseInt(match[1], 10);
     const month = parseInt(match[2], 10);
     const day = parseInt(match[3], 10);
-    // Validate ranges
     if (month < 1 || month > 12 || day < 1 || day > 31) {
         console.error(`Invalid date: ${dateString}`);
         return "";
@@ -42,27 +37,7 @@ const formatDateString = (dateString) => {
         console.error(`Invalid date: ${dateString}`);
         return "";
     }
-<<<<<<< HEAD
-    return date.toISOString().split("T")[0]; // Return strict YYYY-MM-DD format
-=======
-    return date.toISOString().split('T')[0]; // Return strict YYYY-MM-DD format
-    // try {
-    //     const parsedDate = parse(dateString, "MM/dd/yy", new Date()) ||
-    //                        parse(dateString, "MMMM d, yyyy", new Date()) ||
-    //                        parse(dateString, "MMM-dd-yyyy", new Date());
-    //     console.log(parsedDate);
-    //     return format(parsedDate, "yyyy-MM-dd");
-    // } catch (error) {
-    //     console.log(`Invalid date format: ${dateString}`);
-    //     return "";
-    // }
-    // const year = date.getFullYear();
-    // const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    // const day = date.getDate().toString().padStart(2, '0');
-    // const formattedDate = `${year}-${month}-${day}`;
-    // // const checkDate = new Date(formattedDate)
-    // return formattedDate;
->>>>>>> 5b5b95be82579af4f97e8c80acacd646e83e2e16
+    return date.toISOString().split("T")[0];
 };
 exports.formatDateString = formatDateString;
 const preprocessDate = (dateString) => {
@@ -72,7 +47,7 @@ const preprocessDate = (dateString) => {
     const verboseMatch = dateString.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/); // Month day, year
     if (mmddyyMatch) {
         const [, mm, dd, yy] = mmddyyMatch;
-        const year = 2000 + parseInt(yy, 10); // Assuming dates are in the 2000s
+        const year = 2000 + parseInt(yy, 10);
         const month = parseInt(mm, 10);
         const day = parseInt(dd, 10);
         return { year, month, day };
