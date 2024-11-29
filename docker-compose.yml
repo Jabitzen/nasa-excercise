@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./nasa-image-viewer-server
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./nasa-image-viewer-server:/src
+      - /app/node_modules
+
+  client:
+    build:
+      context: ./nasa-image-viewer-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nasa-image-viewer-frontend:/src
+      - /app/node_modules
