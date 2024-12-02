@@ -1,10 +1,9 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
-// module.exports = {
-//   testEnvironment: "node",
-//   transform: {
-//     "^.+.tsx?$": ["ts-jest",{}],
-//   },
-// };
-
-export const preset = "ts-jest";
-export const testEnvironment = "node";
+module.exports = {
+  preset: "ts-jest",
+  testEnvironment: "node",
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+  },
+  moduleFileExtensions: ["ts", "tsx", "js", "json"],
+};
